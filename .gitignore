@@ -1,0 +1,4 @@
+*.pyc
+app/static/css/*
+app/static/fonts/*
+app/static/js/*

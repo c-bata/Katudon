@@ -1,0 +1,102 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<p>アカウント登録</p>
+
+<p>ユーザ情報を入力して下さい。</p>
+<a href="{{url_for('index')}}">Topに戻る</a><br>
+<a href="{{url_for('logout_route')}}">Logout</a><br>
+
+
+
+<!--学年・学科選択-->
+<form method = "post" action="{{url_for('create_account')}}">
+	<div class="box">
+		<div class="row">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-3">
+				<div class="btn-group">
+					<button class="btn btn-primary">学年</button>
+					<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li><a href="">1年</a></li>
+						<li><a href="">2年</a></li>
+						<li><a href="">3年</a></li>
+						<li><a href="">4年</a></li>
+						<li><a href="">5年</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-xs-3">
+				<div class="btn-group">
+					<button class="btn btn-primary">学科</button>
+					<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+						<span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li><a href="">機械工学科</a></li>
+						<li><a href="">電気情報工学科</a></li>
+						<li><a href="">都市システム工学科</a></li>
+						<li><a href="">建築工学科</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="col-xs-3"></div>
+		</div>
+		<!--コース選択 ラジオボタン-->
+		<div class="row">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-3">
+				<label class="radio">
+					<input type="radio" name="course" value="elec" checked>電気・電子工学コース
+				</label>
+			</div>
+			<div class="col-xs-3">
+				<label class="radio">
+					<input type="radio" name="course" value="info">情報工学コース
+				</label>
+			</div>
+			<div class="col-xs-3"></div>
+		</div>
+		<!--性別 ラジオボタン-->
+		<div class="row">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-3">
+				<label class="radio">
+					<input type="radio" name="sex" value="male" checked>男
+				</label>
+			</div>
+			<div class="col-xs-3">
+				<label class="radio">
+					<input type="radio" name="sex" value="female">女
+				</label>
+			</div>
+			<div class="col-xs-3"></div>
+		</div>
+		<!--留学生 チェックボックス-->
+		<div class="row">
+			<div class="col-xs-3"></div>
+			<div class="col-xs-3">
+				<label class="checkbox">
+					<input type="checkbox" name="abroad" value="abroad">留学生
+				</label>
+			</div>
+			<div class="col-xs-3"></div>
+			<div class="col-xs-3"></div>
+		</div>
+		<div class="row">
+			<div class="col-xs-4"></div>
+			<div class="col-xs-4">
+				<center>
+					<input type="submit" value="登録" class="btn btn-primary">
+				</center>
+			</div>
+			<div class="col-xs-4"></div>
+		</div>
+	</div><!-- box -->
+</form>
+
+
+{% endblock %}

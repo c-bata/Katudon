@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="row">
+
+	<a href="{{url_for('index')}}">Topに戻る.</a><br>
+	<a href="{{url_for('create_account')}}">アカウント作成</a><br>
+	<a href="{{url_for('logout_route')}}">Logout</a><br><br><br><br>
+
+	<p class="lead">時間割を見れるよ</p>
+	<p>献立も見れるよ</p>
+
+	<div class="modal fade" id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<a class="close" data-dismiss="modal">x</a>
+					<h3>今日の献立</h3>
+				</div>
+				<div class="modal-body">
+					{% for lunch in lunchs %}
+						<p>{{lunch}}
+						{% if loop.index == 1 %}
+							  400円</p>
+						{% elif loop.index == 2 %}
+							  350円</p>
+						{% elif loop.index == 3 %}
+							  350円</p>
+						{% elif loop.index == 4 %}
+							  300円</p>
+						{% endif %}
+					{% endfor %}
+					<br>
+					<p>カツ丼 500円</p>
+					<p>カツ丼 500円</p>
+					<p>カツ丼 500円</p>
+					<p>カツ丼 500円</p>
+					<p>カツ丼 500円</p>
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn">閉じる</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 時間割・献立 -->
+
+	<div class="row">
+		<div class="col-sm-4"></div>
+		<div class="col-sm-4">
+			<table class="table table-bordered text-center">
+				<tbody>
+					{% for timetable in timetables %}
+						<tr class="active">
+							<td><a type="button" class="btn btn-lg" target="_blank" href="{{timetable["uri"]}}">{{timetable["name"]}}</a></td>
+						</tr>
+						{% if loop.index == 2 %}<!-- 2限と3限の間に昼ごはんを挿入 -->
+							<tr>
+								<td><a class="btn btn-lg" data-toggle="modal" href="#myModal">昼ご飯</a></td>
+							</tr>
+						{% endif %}
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<div class="col-sm-4"></div>
+	</div>
+</div>
+
+{% endblock %}
