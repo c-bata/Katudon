@@ -10,4 +10,3 @@ auth = GoogleFederated('s.akashi.ac.jp', app)
 db = SQLAlchemy(app)
 
 from app import views, models
-

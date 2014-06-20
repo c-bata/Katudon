@@ -4,6 +4,23 @@ import urllib2
 from xml.etree.ElementTree import *
 from app import db
 
+
+def get_xml_string(TIMETABLE_URL):
+    try:
+        xmlString = urllib2.urlopen(TIMETABLE_URL).read()
+    except urllib2.HTTPError as err:
+        print('HTTPError')
+        print(err)
+    except urllib2.URLError as err:
+        print('URLError')
+        print(err)
+        if isinstance(err.reason, socket.timeout):
+            print('timeout')
+    else:
+        print('Get XML')
+
+    return fromstring(xmlString)
+
 def parse_xml():
     # エレメントの作成
     TIMETABLE_URL = "http://www.akashi.ac.jp/data/timetable/timetable201404.xml"
@@ -26,23 +43,6 @@ def parse_xml():
             elif 'Uri' in elem.tag:
         db.session.add(timetable)
     db.session.commit()
-
-
-def get_xml_string(TIMETABLE_URL):
-    try:
-        xmlString = urllib2.urlopen(TIMETABLE_URL).read()
-    except urllib2.HTTPError as err:
-        print('HTTPError')
-        print(err)
-    except urllib2.URLError as err:
-        print('URLError')
-        print(err)
-        if isinstance(err.reason, socket.timeout):
-            print('timeout')
-    else:
-        print('Get XML')
-
-    return fromstring(xmlString)
 
 class User(db.Model):
     u"""ユーザテーブル設計."""
