@@ -22,30 +22,31 @@ def get_xml_string(TIMETABLE_URL):
     return fromstring(xmlString)
 
 def parse_xml():
-    # エレメントの作成
     TIMETABLE_URL = "http://www.akashi.ac.jp/data/timetable/timetable201404.xml"
     element = get_xml_string(TIMETABLE_URL)
 
-    # db初期化 -> NG! テーブルは一つじゃないからそんなことしたらだめ
-    #db.drop_all()
     #db.create_all()
 
     for elem1 in element[0][1]:
-        # ここでテーブルを切り替え
         timetable = User()
         for elem in elem1:
             if 'Name' in elem.tag:
                 timetable.name = elem.text
             elif 'Grade' in elem.tag:
+                timetable.name = elem.name
             elif 'Department' in elem.tag:
+                timetable.department = elem.department
             elif 'Wday' in elem.tag:
+                timetable.wday = elem.wday
             elif 'Location' in elem.tag:
+                timetable.location = elem.location
             elif 'Uri' in elem.tag:
+                timetable.uri = elem.uri
         db.session.add(timetable)
     db.session.commit()
 
 class User(db.Model):
-    u"""ユーザテーブル設計."""
+    u"""user table"""
     __tablename__ = 'users'
     id         = db.Column(db.Integer, primary_key=True)
     school_id  = db.Column(db.String(16))
@@ -65,7 +66,7 @@ class User(db.Model):
         self.abroad     = abroad
 
 class WeeklyMenu(db.Model):
-    u"""週メニューテーブル設計."""
+    u"""week menu table."""
     __tablename__ = 'weeklymenus'
     week_id    = db.Column(db.Integer, primary_key=True)
     don        = db.Column(db.String(32))
@@ -81,7 +82,7 @@ class WeeklyMenu(db.Model):
         self.end_date   = end_date
 
 class DailyMenu(db.Model):
-    u"""毎日メニューテーブル設計."""
+    u"""dayly menu table."""
     __tablename__ = 'dailymenus'
     id    = db.Column(db.String(16), primary_key=True)
     amenu  = db.Column(db.String(32))
@@ -95,7 +96,7 @@ class DailyMenu(db.Model):
         self.date  = date
 
 class ClassTable(db.Model):
-    u"""授業テーブル設計."""
+    u"""class table."""
     __tablename__ = 'classtables'
     classid    = db.Column(db.Integer, primary_key=True)
     classname  = db.Column(db.String(64))
@@ -107,7 +108,7 @@ class ClassTable(db.Model):
         self.syllabus  = syllabus
 
 class StudentTable(db.Model):
-    u"""学生テーブル設計."""
+    u"""student table."""
     __tablename__ = 'studenttables'
     classid = db.Column(db.Integer, primary_key=True)
     sex     = db.Column(db.Boolean)
@@ -119,7 +120,7 @@ class StudentTable(db.Model):
         self.abroad = abroad
 
 class GradeTable(db.Model):
-    u"""学年テーブル設計."""
+    u"""grade table."""
     __tablename__ = 'gradetables'
     id  = db.Column(db.Integer, primary_key=True)
     grade      = db.Column(db.Integer)
