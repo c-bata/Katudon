@@ -4,10 +4,13 @@ from flask import Flask, render_template, request, flash, session, redirect, url
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.googleauth import (GoogleFederated, GoogleAuth)
 from app import app, auth, db
-from models import *
+from dbmodels import *
 from models.user_predict import *
 
-
+@app.before_first_request
+def init():
+    db.drop_all() # 都合上起動する度にdbは削除. 本番環境に入れる前に消すこと！
+    db.create_all()
 
 class Users(db.Model):
     u"""user table"""
@@ -16,7 +19,7 @@ class Users(db.Model):
     school_id  = db.Column(db.String(16))
     grade      = db.Column(db.Integer)
     department = db.Column(db.Integer) # 0:m, 1:e, 2:c, 3:a, 4:me ,5:ac
-    cource     = db.Column(db.Boolean) # true: j, false:e
+    course     = db.Column(db.Boolean) # true: j, false:e
     sex        = db.Column(db.Boolean) # true: women only, false: men only
     abroad     = db.Column(db.Boolean) # true: abroad only, false:japanese only
 
@@ -25,7 +28,7 @@ class Users(db.Model):
         self.school_id  = school_id
         self.grade      = grade
         self.department = department
-        self.cource     = cource
+        self.course     = course
         self.sex        = sex
         self.abroad     = abroad
 
@@ -35,7 +38,8 @@ class Users(db.Model):
 def create_account():
     """create a user account"""
     if request.method == 'POST':
-        # POSt REQUEST
+
+        # POST REQUEST
 
         ## request.form['grade']等が存在しないからif文でも呼び出すだけでBadRequest
         ## が帰る.
@@ -44,8 +48,8 @@ def create_account():
         #or not request.form['course'] \
         #or not request.form['sex']:
 
-        if request.form.get('grade') is None \
-                or request.form.get('department') is None:
+        if request.form['grade'] == u'' \
+                or request.form['department'] == u'':
 
             flash(u'Please enter all the fields.', 'error')
             return render_template('create_account.html')
@@ -55,26 +59,39 @@ def create_account():
                 course = True
             else:
                 course = False
-
             if request.form.get('sex') == u'female':
                 sex = True
             else:
                 sex = False
-
             if request.form.get('abroad') is None:
                 abroad = False
             else:
                 abroad = True
 
+            get_department = request.form['department']
+            department = 1 # ミスってた時のためにE科で初期化.
+            if get_department == u'M':
+                department = 0
+            elif get_department == u'E':
+                department = 1
+            elif get_department == u'C':
+                department = 2
+            elif get_department == u'A':
+                department = 3
+            elif get_department == u'ME':
+                department = 4
+            elif get_department == u'AC':
+                department = 5
 
             import pdb;pdb.set_trace()
 
             user = Users(get_school_id_from_mail_adress(g.user['email']),
-                        5,
-                        1,
+                        int(request.form['grade']),
+                        department,
                         course,
                         sex,
                         abroad)
+
 
             db.session.add(user)
             db.session.commit()
@@ -101,6 +118,11 @@ def home():
     Show TimeTable & Lunch Menu
     もしユーザテーブルにそのメールアドレスがなかったらcreate_accountにredirect
     """
+
+    user = db.session.query(Users).filter(Users.school_id == \
+            get_school_id_from_mail_adress(g.user['email'])).first()
+
+    import pdb;pdb.set_trace()
 
     timetable = [{"name":u"一限目","uri":"http://google.co.jp"},
             {"name":u"二限目","uri":"http://yahoo.co.jp"},

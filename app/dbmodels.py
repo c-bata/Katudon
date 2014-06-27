@@ -4,7 +4,6 @@ import urllib2
 from xml.etree.ElementTree import *
 from app import db
 
-
 def get_xml_string(TIMETABLE_URL):
     try:
         xmlString = urllib2.urlopen(TIMETABLE_URL).read()
@@ -45,25 +44,6 @@ def parse_xml():
         db.session.add(timetable)
     db.session.commit()
 
-class User(db.Model):
-    u"""user table"""
-    __tablename__ = 'users'
-    id         = db.Column(db.Integer, primary_key=True)
-    school_id  = db.Column(db.String(16))
-    grade      = db.Column(db.Integer)
-    department = db.Column(db.Integer) # 0:m, 1:e, 2:c, 3:a, 4:me ,5:ac
-    cource     = db.Column(db.Boolean) # true: j, false:e
-    sex        = db.Column(db.Boolean) # true: women only, false: men only
-    abroad     = db.Column(db.Boolean) # true: abroad only, false:japanese only
-
-    def __init__(self, school_id, grade, department, cource, sex, abroad):
-        """ Initializes the fields with entered data """
-        self.school_id  = school_id
-        self.grade      = grade
-        self.department = department
-        self.cource     = cource
-        self.sex        = sex
-        self.abroad     = abroad
 
 class WeeklyMenu(db.Model):
     u"""week menu table."""

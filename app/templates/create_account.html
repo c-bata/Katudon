@@ -13,96 +13,104 @@
 	<p>{{ userinfo['department'] }} {{ userinfo['grade'] }}</p>
 {% endif %}
 
-
-<!--学年・学科選択-->
-<form method = "post" action="{{url_for('create_account')}}">
-	<div class="box">
-		<div class="row">
-			<div class="col-xs-3"></div>
-			<div class="col-xs-3">
-				<div class="btn-group">
+<form method="post" action="{{url_for('create_account')}}">
+	<div class="row">
+		<div class="col-xs-3"></div>
+		<div class="col-xs-6">
+			<div class="btn-group">
 				<button class="btn btn-primary"><span id="visibleValue1">学年</span></button>
-					<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-						<span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" role="menu" hiddenTag="#hiddenValue1" visibleTag="#visibleValue1">
-						<li><a href="javascript:void(0)" name="grade" value="1年">1年</a></li>
-						<li><a href="javascript:void(0)" name="grade" value="2年">2年</a></li>
-						<li><a href="javascript:void(0)" name="grade" value="3年">3年</a></li>
-						<li><a href="javascript:void(0)" name="grade" value="4年">4年</a></li>
-						<li><a href="javascript:void(0)" name="grade" value="5年">5年</a></li>
-						<input type="hidden" id="hiddenValue1" value="">
-					</ul>
+				<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu" hiddenTag="#hiddenValue1" visibleTag="#visibleValue1">
+					<li><a href="javascript:void(0)" value="1年" value1="1" class="under">1年</a></li>
+					<li><a href="javascript:void(0)" value="2年" value1="2" class="under">2年</a></li>
+					<li><a href="javascript:void(0)" value="3年" value1="3" class="under">3年</a></li>
+					<li><a href="javascript:void(0)" value="4年" value1="4" class="over">4年</a></li>
+					<li><a href="javascript:void(0)" value="5年" value1="5" class="over">5年</a></li>
+					<input type="hidden" id="hiddenValue1" name="grade" value="">
+				</ul>
+			</div>		<!-- btn-group -->
+			<br></br>
+			<div class="btn-group">
+				<button class="btn btn-primary"><span id="visibleValue">学科</span></button>
+				<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu" hiddenTag="#hiddenValue" visibleTag="#visibleValue">
+					<li><a href="javascript:void(0)" value="機械工学科"				value1="M" class="other">機械工学科</a></li>
+					<li><a href="javascript:void(0)" value="電気情報工学科" 		value1="E" id="elec">電気情報工学科</a></li>
+					<li><a href="javascript:void(0)" value="都市システム工学科" 	value1="C" class="other">都市システム工学科</a></li>
+					<li><a href="javascript:void(0)" value="建築工学科" 			value1="A" class="other">建築工学科</a></li>
+					<input type="hidden" id="hiddenValue" name="department" value="">
+				</ul>
+			</div>		<!-- btn-group -->
+		</div>			<!-- colum -->
+		<div class="col-xs-3"></div>
+	</div>
+	<!--コース選択 ラジオボタン-->
+	<div class="row" id="ko-su">
+		<div class="col-xs-3"></div>
+		<div class="col-xs-6">
+			<div class="well well-small">
+				<div class="row">
+					<div class="col-xs-5">
+						<label class="radio-inline">
+							<input type="radio" name="course" value="electoric">電気・電子工学コース
+						</label>
+					</div>
+					<div class="col-xs-1"></div>
+					<div class="col-xs-6">
+						<label class="radio-inline">
+							<input type="radio" name="course" value="information">情報工学コース
+						</label>
+					</div>	<!-- colum -->
+				</div>		<!-- row -->
+			</div>			<!-- well -->
+		</div>			<!-- colum -->
+		<div class="col-xs-3"></div>
+	</div>				<!-- row -->
+	<!--性別 ラジオボタン-->
+	<div class="row">
+		<div class="col-xs-3"></div>
+		<div class="col-xs-6">
+			<div class="row">
+				<div class="col-xs-5">
+					<label class="radio-inline">
+						<input type="radio" name="sex" value="male" checked>男
+					</label>
 				</div>
-			</div>
-			<div class="col-xs-3">
-				<div class="btn-group">
-					<button class="btn btn-primary"><span id="visibleValue">学科</span></button>
-					<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-						<span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" role="menu" hiddenTag="#hiddenValue" visibleTag="#visibleValue">
-						<li><a href="javascript:void(0)" name="department" value="機械工学科">機械工学科</a></li>
-						<li><a href="javascript:void(0)" name="department" value="電気情報工学科">電気情報工学科</a></li>
-						<li><a href="javascript:void(0)" name="department" value="都市システム工学">都市システム工学科</a></li>
-						<li><a href="javascript:void(0)" name="department" value="建築工学科">建築工学科</a></li>
-						<input type="hidden" id="hiddenValue" value="">
-					</ul>
-				</div>
-			</div>
-			<div class="col-xs-3"></div>
-		</div>
-		<!--コース選択 ラジオボタン-->
-		<div class="row">
-			<div class="col-xs-3"></div>
-			<div class="col-xs-3">
-				<label class="radio">
-					<input type="radio" name="course" value="elec" checked>電気・電子工学コース
-				</label>
-			</div>
-			<div class="col-xs-3">
-				<label class="radio">
-					<input type="radio" name="course" value="info">情報工学コース
-				</label>
-			</div>
-			<div class="col-xs-3"></div>
-		</div>
-		<!--性別 ラジオボタン-->
-		<div class="row">
-			<div class="col-xs-3"></div>
-			<div class="col-xs-3">
-				<label class="radio">
-					<input type="radio" name="sex" value="male" checked>男
-				</label>
-			</div>
-			<div class="col-xs-3">
-				<label class="radio">
-					<input type="radio" name="sex" value="female">女
-				</label>
-			</div>
-			<div class="col-xs-3"></div>
-		</div>
-		<!--留学生 チェックボックス-->
-		<div class="row">
-			<div class="col-xs-3"></div>
-			<div class="col-xs-3">
-				<label class="checkbox">
-					<input type="checkbox" name="abroad" value="abroad">留学生
-				</label>
-			</div>
-			<div class="col-xs-3"></div>
-			<div class="col-xs-3"></div>
-		</div>
-		<div class="row">
-			<div class="col-xs-4"></div>
-			<div class="col-xs-4">
-				<center>
-					<input type="submit" value="登録" class="btn btn-primary">
-				</center>
-			</div>
-			<div class="col-xs-4"></div>
-		</div>
-	</div><!-- box -->
+				<div class="col-xs-1"></div>
+				<div class="col-xs-6">
+					<label class="radio-inline">
+						<input type="radio" name="sex" value="female">女
+					</label>
+				</div>	<!-- colum -->
+			</div>		<!-- row -->
+		</div>			<!-- colum -->
+		<div class="col-xs-3"></div>
+	</div>				<!-- row -->
+	<!--留学生 チェックボックス-->
+	<div class="row">
+		<div class="col-xs-3"></div>
+		<div class="col-xs-3">
+			<label class="checkbox">
+				<input type="checkbox" name="abroad" value="abroad">留学生
+			</label>
+		</div>			<!--colum-->
+		<div class="col-xs-3"></div>
+		<div class="col-xs-3"></div>
+	</div>				<!-- row -->
+	<div class="row">
+		<div class="col-xs-4"></div>
+		<div class="col-xs-4">
+			<center>
+				<input type="submit" value="登録" class="btn btn-primary">
+			</center>
+		</div>			<!-- colum -->
+		<div class="col-xs-4"></div>
+	</div>				<!-- row -->
 </form>
+
 
 {% endblock %}
