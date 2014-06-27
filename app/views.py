@@ -13,13 +13,15 @@ def init():
     db.create_all()
 
 class Users(db.Model):
-    u"""user table"""
+    u"""user table
+    courceの綴り間違えてるけど、直したら動かなくなったからこのままいく.
+    はまりそうだからきをつけて"""
     __tablename__ = 'users'
     id         = db.Column('student_id', db.Integer, primary_key=True)
     school_id  = db.Column(db.String(16))
     grade      = db.Column(db.Integer)
     department = db.Column(db.Integer) # 0:m, 1:e, 2:c, 3:a, 4:me ,5:ac
-    course     = db.Column(db.Boolean) # true: j, false:e
+    cource     = db.Column(db.Boolean) # true: j, false:e
     sex        = db.Column(db.Boolean) # true: women only, false: men only
     abroad     = db.Column(db.Boolean) # true: abroad only, false:japanese only
 
@@ -28,7 +30,7 @@ class Users(db.Model):
         self.school_id  = school_id
         self.grade      = grade
         self.department = department
-        self.course     = course
+        self.cource     = cource
         self.sex        = sex
         self.abroad     = abroad
 
@@ -83,8 +85,6 @@ def create_account():
             elif get_department == u'AC':
                 department = 5
 
-            import pdb;pdb.set_trace()
-
             user = Users(get_school_id_from_mail_adress(g.user['email']),
                         int(request.form['grade']),
                         department,
@@ -122,6 +122,10 @@ def home():
     user = db.session.query(Users).filter(Users.school_id == \
             get_school_id_from_mail_adress(g.user['email'])).first()
 
+    if user == None:
+        flash(u'アカウントを作成して下さい.')
+        return redirect(url_for('create_account'))
+
     import pdb;pdb.set_trace()
 
     timetable = [{"name":u"一限目","uri":"http://google.co.jp"},
@@ -144,7 +148,7 @@ def login_route():
     """
     auth._login()
     #flash(u'ログインに成功しました. ようこそ！%s %sさん' % (g.user['last_name'], g.user['first_name']) )
-    flash(u'Success to login! Welcome!' )
+    #flash(u'Success to login! Welcome!' )
     return redirect(url_for('home'))
 
 @app.route('/logout_route')
