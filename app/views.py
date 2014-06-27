@@ -34,15 +34,64 @@ class Users(db.Model):
         self.sex        = sex
         self.abroad     = abroad
 
+@app.route('/admin', methods=['GET', 'POST'])
+@auth.required
+def admin():
+    if get_school_id_from_mail_adress(g.user['email']) != u'e1020' \
+            or is_email_adress_valid(g.user['email']) == True:
+        flash(u'管理者以外ははいれません.')
+        return redirect(url_for('home'))
+
+    if request.method == 'POST':
+        flash('Please enter all the fields.', 'error')
+        return u'未実装'
+        #return render_template('admin.html')
+    else:
+        return u'未実装'
+        #return render_template('admin.html')
+
+@app.route('/dailymenu', methods=['GET', 'POST'])
+@auth.required
+def dailymenu():
+    if get_school_id_from_mail_adress(g.user['email']) != u'e1020' \
+            or is_email_adress_valid(g.user['email']) == True:
+        flash(u'管理者以外ははいれません.')
+        return redirect(url_for('home'))
+
+    if request.method == 'POST':
+        flash('Please enter all the fields.', 'error')
+        return render_template('dailymenu.html')
+    else:
+        return render_template('dailymenu.html')
+
+@app.route('/weeklymenu', methods=['GET', 'POST'])
+@auth.required
+def weeklymenu():
+    if get_school_id_from_mail_adress(g.user['email']) != u'e1020' \
+            or is_email_adress_valid(g.user['email']) == True:
+        flash(u'管理者以外ははいれません.')
+        return redirect(url_for('home'))
+
+    if request.method == 'POST':
+        flash('Please enter all the fields.', 'error')
+        return render_template('weeklymenu.html')
+    else:
+        return render_template('weeklymenu.html')
 
 @app.route('/create_account', methods=['GET', 'POST'])
 @auth.required
 def create_account():
     """create a user account"""
+
+    # 先生はadminにとばす.
+    if is_email_adress_valid(g.user['email']) == False:
+        flash('学生でない方は、アカウントを作成できません.')
+        return redirect(url_for('admin'))
+
+
     if request.method == 'POST':
 
         # POST REQUEST
-
         ## request.form['grade']等が存在しないからif文でも呼び出すだけでBadRequest
         ## が帰る.
         #if not request.form['grade'] \
@@ -53,14 +102,10 @@ def create_account():
         if request.form['grade'] == u'' \
                 or request.form['department'] == u'':
 
-            flash(u'Please enter all the fields.', 'error')
+            flash(u'入力項目が足りていません.', 'error')
             return render_template('create_account.html')
         else:
 
-            if request.form.get('course') == u'elec':
-                course = True
-            else:
-                course = False
             if request.form.get('sex') == u'female':
                 sex = True
             else:
@@ -85,13 +130,23 @@ def create_account():
             elif get_department == u'AC':
                 department = 5
 
+            grade = int(request.form['grade'])
+
+            if grade == 4 and department == 1\
+                    or grade == 5 and department == 1:
+                if request.form.get('course') == u'elec':
+                    course = True
+                else:
+                    course = False
+            else:
+                course = None
+
             user = Users(get_school_id_from_mail_adress(g.user['email']),
-                        int(request.form['grade']),
+                        grade,
                         department,
                         course,
                         sex,
                         abroad)
-
 
             db.session.add(user)
             db.session.commit()
@@ -116,8 +171,12 @@ def index():
 def home():
     u"""
     Show TimeTable & Lunch Menu
-    もしユーザテーブルにそのメールアドレスがなかったらcreate_accountにredirect
     """
+
+    # 先生はadminにとばす.
+    if is_email_adress_valid(g.user['email']) == False:
+        flash('学生でない方は、アカウントを作成できません.')
+        return redirect(url_for('admin'))
 
     user = db.session.query(Users).filter(Users.school_id == \
             get_school_id_from_mail_adress(g.user['email'])).first()
@@ -125,8 +184,6 @@ def home():
     if user == None:
         flash(u'アカウントを作成して下さい.')
         return redirect(url_for('create_account'))
-
-    import pdb;pdb.set_trace()
 
     timetable = [{"name":u"一限目","uri":"http://google.co.jp"},
             {"name":u"二限目","uri":"http://yahoo.co.jp"},

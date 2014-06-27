@@ -64,10 +64,10 @@ class WeeklyMenu(db.Model):
 class DailyMenu(db.Model):
     u"""dayly menu table."""
     __tablename__ = 'dailymenus'
-    id    = db.Column(db.String(16), primary_key=True)
+    id     = db.Column(db.String(16), primary_key=True)
     amenu  = db.Column(db.String(32))
-    bmenu = db.Column(db.String(32))
-    date  = db.Column(db.DateTime)
+    bmenu  = db.Column(db.String(32))
+    date   = db.Column(db.DateTime)
 
     def __init__(self, amenu, bmenu, date):
         """ Initializes the fields with entered data """

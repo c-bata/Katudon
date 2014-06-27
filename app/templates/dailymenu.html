@@ -1,0 +1,131 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<a href="{{url_for('index')}}">Topに戻る</a><br>
+<a href="{{url_for('logout_route')}}">Logout</a><br>
+
+
+<center><h3>日替わりメニュー</h3></center>
+<br></br>
+
+<!--定食選択-->
+<form method="post" action="{{url_for('dailymenu')}}">
+	<div class="row">
+		<div class="col-xs-3"></div>
+		<div class="col-xs-2">
+			<label class="inline"><p><h4>メニュー</h4></p></label>
+		</div>
+		<div class="col-xs-4">
+			<div class="btn-group">
+				<button class="btn btn-primary"><span id="visibleValue1">日替わり定食</span></button>
+				<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" id="grade" role="menu" hiddenTag="#hiddenValue1" visibleTag="#visibleValue1">
+					<li><a href="javascript:void(0)" value="1年" value1="1" class="under">Aセット</a></li>
+					<li><a href="javascript:void(0)" value="2年" value1="2" class="under">Bセット</a></li>
+					<input type="hidden" id="hiddenValue1" name="" value="">
+				</ul>
+			</div>				<!-- btn-group -->
+		</div>				<!-- colum -->
+		<div class="col-xs-3"></div>
+	</div>					<!-- row -->
+	<br></br>
+
+	<!-- メニュー名入力 -->
+	<div class="row">
+		<div class="col-xs-3"></div>
+		<div class="col-xs-2">
+			<label class="inline"><p><h4>メニュー名</h4></p></label>
+		</div>
+		<div class="col-xs-4">
+			<label class="inline"><input type="text"></label>
+		</div>				<!-- colum -->
+		<div class="col-xs-3"></div>
+	</div>					<!-- row -->
+	<br></br>
+
+
+	<!-- 日付入力 -->
+	<div class="row">
+		<div class="col-xs-3"></div>
+		<div class="col-xs-2">
+			<label class="inline"><p><h4>日付</h4></p></label>
+		</div>
+		<div class="col-xs-4">
+			<div class="btn-group">
+				<button class="btn btn-primary btn-large"><span id="visibleValue1">月</span></button>
+				<button class="btn btn-primary dropdown-toggle btn-large" data-toggle="dropdown">
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" id="grade" role="menu" hiddenTag="#hiddenValue1" visibleTag="#visibleValue1">
+					<li><a href="javascript:void(0)" value= "1月" value1="1" class="under">1月</a></li>
+					<li><a href="javascript:void(0)" value= "2月" value1="2" class="under">2月</a></li>
+					<li><a href="javascript:void(0)" value= "3月" value1="1" class="under">3月</a></li>
+					<li><a href="javascript:void(0)" value= "4月" value1="2" class="under">4月</a></li>
+					<li><a href="javascript:void(0)" value= "5月" value1="2" class="under">5月</a></li>
+					<li><a href="javascript:void(0)" value= "6月" value1="1" class="under">6月</a></li>
+					<li><a href="javascript:void(0)" value= "7月" value1="2" class="under">7月</a></li>
+					<li><a href="javascript:void(0)" value= "8月" value1="2" class="under">8月</a></li>
+					<li><a href="javascript:void(0)" value= "9月" value1="1" class="under">9月</a></li>
+					<li><a href="javascript:void(0)" value="10月" value1="2" class="under">10月</a></li>
+					<li><a href="javascript:void(0)" value="11月" value1="2" class="under">11月</a></li>
+					<li><a href="javascript:void(0)" value="12月" value1="2" class="under">12月</a></li>
+					<input type="hidden" id="hiddenValue1" name="" value="">
+				</ul>
+			</div>				<!-- btn-group -->
+		</div>				<!-- colum -->
+		<div class="col-xs-3"></div>
+	</div>					<!-- row -->	<!-- 月 -->
+	<br></br>
+	<div class="row">
+		<div class="col-xs-3"></div>
+		<div class="col-xs-2">
+			<label class="inline"><p><h4></h4></p></label>
+		</div>
+		<div class="col-xs-4">
+			<div class="btn-group">
+				<button class="btn btn-primary btn-large"><span id="visibleValue1">日</span></button>
+				<button class="btn btn-primary dropdown-toggle btn-large" data-toggle="dropdown">
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" id="grade" role="menu" hiddenTag="#hiddenValue1" visibleTag="#visibleValue1">
+					<li><a href="javascript:void(0)" value="1月" value1="1" class="under">1月</a></li>
+					<li><a href="javascript:void(0)" value="2月" value1="2" class="under">2月</a></li>
+					<li><a href="javascript:void(0)" value="3月" value1="1" class="under">3月</a></li>
+					<li><a href="javascript:void(0)" value="4月" value1="2" class="under">4月</a></li>
+					<li><a href="javascript:void(0)" value="5月" value1="2" class="under">5月</a></li>
+					<li><a href="javascript:void(0)" value="6月" value1="1" class="under">6月</a></li>
+					<li><a href="javascript:void(0)" value="7月" value1="2" class="under">7月</a></li>
+					<li><a href="javascript:void(0)" value="8月" value1="2" class="under">8月</a></li>
+					<li><a href="javascript:void(0)" value="9月" value1="1" class="under">9月</a></li>
+					<li><a href="javascript:void(0)" value="10月" value1="2" class="under">10月</a></li>
+					<li><a href="javascript:void(0)" value="11月" value1="2" class="under">11月</a></li>
+					<li><a href="javascript:void(0)" value="12月" value1="2" class="under">12月</a></li>
+					<input type="hidden" id="hiddenValue1" name="" value="">
+				</ul>
+			</div>				<!-- btn-group -->
+		</div>				<!-- colum -->
+		<div class="col-xs-3"></div>
+	</div>					<!-- row -->	<!-- 月 -->
+	<br></br>
+	<input type="submit" value="アップロード" class="btn btn-primary btn-small btn-block">
+</form>
+
+
+<!-- used maxcdn
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+-->
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	$('#header').click(function(){
+			$('#header').css("background-color","blue");
+			})
+</script>
+
+
+{% endblock %}

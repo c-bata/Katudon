@@ -39,65 +39,6 @@
 
 		</div> <!-- /container -->
 
-		<!-- used maxcdn
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-		-->
-
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
-		<script src="/static/js/bootstrap.min.js"></script>
-
-		<script type="text/javascript">
-			var nen;
-			var gakka;
-			$(function(){
-					$('#ko-su').css("display","none");
-					});
-
-$(function(){
-		$('.dropdown-menu a').click(function(){
-			//反映先の要素名を取得
-			var visibleTag = $(this).parents('ul').attr('visibleTag');
-			var hiddenTag = $(this).parents('ul').attr('hiddenTag');
-			//選択された内容でボタンの表示を変える
-			$(visibleTag).html($(this).attr('value'));
-			//選択された内容でhidden項目の値を変える
-			$(hiddenTag).val($(this).attr('value1'));
-			})
-		});
-
-$('.over').click(function(){
-		nen=true;
-		judge();
-		});
-
-$('.under').click(function(){
-		nen=false;
-		judge();
-		});
-
-$('.other').click(function(){
-		gakka="other";
-		judge();
-		});
-
-$('#elec').click(function(){
-		gakka="ele";
-		judge();
-		});
-
-function judge(){
-	if(gakka=="ele"){
-		if(nen){
-			$('#ko-su').fadeIn(500);
-		}else{
-			$('#ko-su').fadeOut(500);
-		}
-	}else{
-		$('#ko-su').fadeOut(500);
-	}
-}
-</script>
 </body>
 </html>
 
